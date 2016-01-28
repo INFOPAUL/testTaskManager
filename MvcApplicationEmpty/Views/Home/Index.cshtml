@@ -1,0 +1,65 @@
+﻿@{
+    Layout = null;
+}
+
+
+
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Get Current Date Time in Angularjs</title>
+
+
+    <script src="/Scripts/angular.js"></script>
+    <script type="text/javascript">
+        var k = angular.module('k', []);
+        k.controller("Ctrl",function ($scope,$http){
+            var home = '/Home/GetTime/';
+            $scope.getTime = function () {
+               
+                var promise = $http.get(home)
+                    .success(function (data) {
+                    return data;
+                    
+                    }).error(function () { alert("Server Error"); });
+                return promise;
+            }
+            function updateLater() {
+
+                 setTimeout(function () {
+                     $scope.getTime().then(function (res) {document.getElementById("clock").innerHTML = res.data; });
+                     
+                     updateLater(); 
+                 }, 1000);
+            }
+            updateLater();         
+        });
+
+  </script>
+</head>
+<body >
+    <form id="form1">
+        <div >
+            <div ng-app="k">
+                <div ng-controller="Ctrl">                  
+                    <div id="clock"></div>
+                </div>
+            </div>
+            <p>
+                @Html.TextArea("txtBoxNote", string.Empty, 10, 55, null)
+                <input id="btnSaveNote" type="button" value="Add" onclick="setCookie('Task')" />
+              
+              
+                <div id="tasks"></div>
+            </p>
+            <script src="/Scripts/MyScripts/DefaultBodyJS.js" type="text/javascript"></script>
+
+        </div>
+     
+        
+    </form>
+</body>
+</html>
+
+
